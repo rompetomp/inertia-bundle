@@ -1,4 +1,6 @@
 # Inertia.js Symfony Adapter
+[![Build Status](https://travis-ci.org/rompetomp/inertia-bundle.svg?branch=master)](https://travis-ci.org/rompetomp/inertia-bundle)
+
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
 for Symfony.
 
