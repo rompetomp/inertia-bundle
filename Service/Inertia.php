@@ -1,13 +1,13 @@
 <?php
 
-namespace Rompetomp\InertiaBundle;
+namespace Rompetomp\InertiaBundle\Service;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class Inertia
+class Inertia implements InertiaInterface
 {
     /** @var string */
     protected $rootView;
@@ -18,7 +18,7 @@ class Inertia
     /** @var \Symfony\Component\HttpFoundation\RequestStack */
     protected $requestStack;
     /** @var string */
-    private $version = null;
+    protected $version = null;
 
     /**
      * Inertia constructor.
@@ -52,12 +52,12 @@ class Inertia
         $this->version = $version;
     }
 
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    public function render($component, $props = [])
+    public function render($component, $props = []): Response
     {
         $props = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();

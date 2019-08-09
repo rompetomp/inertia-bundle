@@ -1,11 +1,12 @@
 services:
   rompetomp_inertia.inertia:
-    class: Rompetomp\InertiaBundle\Inertia
+    class: Rompetomp\InertiaBundle\Service\Inertia
+    public: false
     arguments:
       $engine: '@twig'
       $requestStack: '@request_stack'
-  Rompetomp\InertiaBundle\Inertia:
-    alias: rompetomp_inertia.inertia
+  Rompetomp\InertiaBundle\Service\InertiaInterface: '@rompetomp_inertia.inertia'
+
   rompetomp_inertia.twig_extension:
     class: Rompetomp\InertiaBundle\Twig\InertiaExtension
     public: false

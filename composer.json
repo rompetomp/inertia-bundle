@@ -20,5 +20,8 @@
     "symfony/dependency-injection": "^4.3",
     "symfony/http-kernel": "^4.3",
     "twig/twig": "^2.11"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^4.3"
   }
 }
