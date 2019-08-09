@@ -1,0 +1,13 @@
+services:
+  rompetomp_inertia.inertia:
+    class: Rompetomp\InertiaBundle\Inertia
+    arguments:
+      $engine: '@twig'
+      $requestStack: '@request_stack'
+  Rompetomp\InertiaBundle\Inertia:
+    alias: rompetomp_inertia.inertia
+  rompetomp_inertia.twig_extension:
+    class: Rompetomp\InertiaBundle\Twig\InertiaExtension
+    public: false
+    tags:
+      - { name: twig.extension }

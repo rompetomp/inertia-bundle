@@ -1,0 +1,24 @@
+{
+  "name": "rompetomp/inertia-bundle",
+  "description": "A Symfony adapter for Inertia.js",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hannes Vermeire",
+      "email": "hannesvermeire@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Rompetomp\\InertiaBundle\\": ""
+    }
+  },
+  "require": {
+    "php": "^7.0",
+    "symfony/config": "^4.3",
+    "symfony/dependency-injection": "^4.3",
+    "symfony/http-kernel": "^4.3",
+    "twig/twig": "^2.11"
+  }
+}
