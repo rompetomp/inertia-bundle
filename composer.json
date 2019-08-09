@@ -22,6 +22,7 @@
     "twig/twig": "^2.11"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^4.3"
+    "symfony/phpunit-bridge": "^4.3",
+    "mockery/mockery": "^1.2"
   }
 }

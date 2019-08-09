@@ -52,9 +52,14 @@ class Inertia implements InertiaInterface
         $this->version = $version;
     }
 
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
+    }
+
+    public function getRootView(): string
+    {
+        return $this->rootView;
     }
 
     public function render($component, $props = []): Response

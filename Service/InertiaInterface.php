@@ -33,7 +33,12 @@ interface InertiaInterface
     /**
      * @return string
      */
-    public function getVersion(): string;
+    public function getVersion(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getRootView(): string;
 
     /**
      * @param       $component
