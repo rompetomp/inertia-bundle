@@ -1,4 +1,5 @@
 <?php
+
 namespace Rompetomp\InertiaBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -42,7 +43,7 @@ class InertiaTest extends TestCase
         $this->assertEquals(
             [
                 'app_version' => '2.0.0',
-                'app_name' => 'Testing App 2'
+                'app_name'    => 'Testing App 2',
             ],
             $this->inertia->getShared()
         );
