@@ -1,14 +1,15 @@
 <?php
+
 namespace Rompetomp\InertiaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Class Configuration
+ * Class Configuration.
  *
- * @package Rompetomp\DependencyInjection
  * @author  Hannes Vermeire <hannes@codedor.be>
+ *
  * @since   2019-08-02
  */
 class Configuration implements ConfigurationInterface
@@ -25,6 +26,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('root_view')->defaultValue('app.html.twig')->end()
             ->end();
+
         return $treeBuilder;
     }
 }
