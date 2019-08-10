@@ -68,11 +68,15 @@ class Inertia implements InertiaInterface
         $request = $this->requestStack->getCurrentRequest();
         $url = $request->getRequestUri();
 
-        $only = array_filter(explode(',', $request->headers->get('X-Inertia-Only')));
-        $props = array_merge($this->sharedProps, $props);
-        $props = array_map(function ($prop) {
-            return $prop instanceof \Closure ? $prop() : $prop;
-        }, $only ? static::array_only($props, $only) : $props);
+        $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
+        $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)
+            ? self::array_only($props, $only) : $props;
+
+        array_walk_recursive($props, function (&$prop) {
+            if ($prop instanceof \Closure) {
+                $prop = $prop();
+            }
+        });
 
         $version = $this->version;
         $page = compact('component', 'props', 'url', 'version');
