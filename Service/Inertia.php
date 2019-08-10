@@ -44,6 +44,7 @@ class Inertia implements InertiaInterface
         if ($key) {
             return $this->sharedProps[$key] ?? null;
         }
+
         return $this->sharedProps;
     }
 
@@ -78,13 +79,14 @@ class Inertia implements InertiaInterface
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
-                'Vary' => 'Accept',
-                'X-Inertia' => true
+                'Vary'      => 'Accept',
+                'X-Inertia' => true,
             ]);
         }
 
         $response = new Response();
         $response->setContent($this->engine->render($this->rootView, compact('page')));
+
         return $response;
     }
 

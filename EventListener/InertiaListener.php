@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rompetomp\InertiaBundle\EventListener;
-
 
 use Rompetomp\InertiaBundle\Service\InertiaInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,8 +8,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
- * Class InertiaListener
- * @package Rompetomp\InertiaBundle\EventListener
+ * Class InertiaListener.
  */
 class InertiaListener
 {

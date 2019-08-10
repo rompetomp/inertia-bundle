@@ -1,4 +1,5 @@
 <?php
+
 namespace Rompetomp\InertiaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -7,10 +8,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
- * Class RompetompInertiaExtension
+ * Class RompetompInertiaExtension.
  *
- * @package Rompetomp\DependencyInjection
  * @author  Hannes Vermeire <hannes@codedor.be>
+ *
  * @since   2019-08-02
  */
 class RompetompInertiaExtension extends ConfigurableExtension
@@ -25,7 +26,7 @@ class RompetompInertiaExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         $definition = $container->getDefinition('rompetomp_inertia.inertia');

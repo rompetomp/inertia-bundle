@@ -1,13 +1,14 @@
 <?php
+
 namespace Rompetomp\InertiaBundle\Service;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Interface InertiaInterface
+ * Interface InertiaInterface.
  *
- * @package Rompetomp\InertiaBundle\Service
  * @author Hannes Vermeire <hannes@codedor.be>
+ *
  * @since   2019-08-09
  */
 interface InertiaInterface
