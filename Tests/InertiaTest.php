@@ -84,7 +84,7 @@ class InertiaTest extends TestCase
         $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
 
         /** @var JsonResponse $response */
-        $response = $this->inertia->render('Dashboard', ['test' => function() {
+        $response = $this->inertia->render('Dashboard', ['test' => function () {
             return 'test-value';
         }]);
         $this->assertEquals(
