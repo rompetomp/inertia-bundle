@@ -23,6 +23,7 @@
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^4.3",
-    "mockery/mockery": "^1.2"
+    "mockery/mockery": "^1.2",
+    "symfony/var-dumper": "^4.3"
   }
 }

@@ -12,3 +12,10 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+
+  Rompetomp\InertiaBundle\EventListener\InertiaListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request }
+      - { name: kernel.event_listener, event: kernel.response }
+    arguments:
+      $inertia: '@rompetomp_inertia.inertia'

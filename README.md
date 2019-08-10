@@ -114,6 +114,5 @@ class InertiaSubscriber implements EventSubscriberInterface
 ```
 
 ## TODO
-- Add inertia-laravel Middleware-like functionality: https://github.com/inertiajs/inertia-laravel/blob/master/src/Middleware.php
 - Lazy loading of props/shared props.
 
