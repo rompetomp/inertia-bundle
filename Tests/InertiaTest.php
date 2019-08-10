@@ -74,6 +74,25 @@ class InertiaTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
     }
 
+    public function testRenderClosureProps()
+    {
+        $mockRequest = \Mockery::mock(Request::class);
+        $mockRequest->shouldReceive('getRequestUri')->andSet('headers', new HeaderBag(['X-Inertia' => true]));
+        $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
+        $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
+
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+
+        /** @var JsonResponse $response */
+        $response = $this->inertia->render('Dashboard', ['test' => function () {
+            return 'test-value';
+        }]);
+        $this->assertEquals(
+            'test-value',
+            json_decode($response->getContent(), true)['props']['test']
+        );
+    }
+
     public function testRenderDoc()
     {
         $mockRequest = \Mockery::mock(Request::class);

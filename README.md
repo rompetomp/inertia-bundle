@@ -108,11 +108,21 @@ class InertiaSubscriber implements EventSubscriberInterface
 
     public function onControllerEvent($event)
     {
-        $this->inertia->share('Auth::user', ['name' => 'Hannes']);
+        $this->inertia->share(
+            'Auth::user', 
+            [
+                'name' => 'Hannes', // Synchronously
+                'posts' => function () {
+                    return [1 => 'Post'];
+                }   
+            ]
+        );
     }
 }
 ```
 
-## TODO
-- Lazy loading of props/shared props.
-
+## Asset versioning
+Like in Laravel, you can also pass a version to the Inertia services by calling
+```php
+$inertia->version($version);
+```

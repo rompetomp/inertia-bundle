@@ -65,9 +65,19 @@ class Inertia implements InertiaInterface
 
     public function render($component, $props = []): Response
     {
-        $props = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
         $url = $request->getRequestUri();
+
+        $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
+        $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)
+            ? self::array_only($props, $only) : $props;
+
+        array_walk_recursive($props, function (&$prop) {
+            if ($prop instanceof \Closure) {
+                $prop = $prop();
+            }
+        });
+
         $version = $this->version;
         $page = compact('component', 'props', 'url', 'version');
 
@@ -82,5 +92,10 @@ class Inertia implements InertiaInterface
         $response->setContent($this->engine->render($this->rootView, compact('page')));
 
         return $response;
+    }
+
+    private static function array_only($array, $keys)
+    {
+        return array_intersect_key($array, array_flip((array) $keys));
     }
 }
