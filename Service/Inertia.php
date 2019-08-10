@@ -65,6 +65,7 @@ class Inertia implements InertiaInterface
     public function render($component, $props = []): Response
     {
         $request = $this->requestStack->getCurrentRequest();
+        $url = $request->getRequestUri();
 
         $only = array_filter(explode(',', $request->headers->get('X-Inertia-Only')));
         $props = array_merge($this->sharedProps, $props);
@@ -72,7 +73,6 @@ class Inertia implements InertiaInterface
             return $prop instanceof \Closure ? $prop() : $prop;
         }, $only ? static::array_only($props, $only) : $props);
 
-        $url = $request->getRequestUri();
         $version = $this->version;
         $page = compact('component', 'props', 'url', 'version');
 
