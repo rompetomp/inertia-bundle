@@ -2,12 +2,17 @@
 [![Build Status](https://travis-ci.org/rompetomp/inertia-bundle.svg?branch=master)](https://travis-ci.org/rompetomp/inertia-bundle)
 
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
-for Symfony.
+for Symfony 4.
 
 ## Installation
 Install using Composer:
 ```console
 composer require rompetomp/inertia-bundle
+```
+You will also need the twig and encore recipe if you don't have it already:
+```console
+composer require twig
+composer require encore
 ```
 
 ## Setup root template
@@ -39,12 +44,16 @@ contains the initial page information. This is what it looks like:
 <div id="app" data-page="<?php echo htmlspecialchars(json_encode($page)); ?>"></div>
 ```
 
-If you'd like a different root view, you can change it by creating a `packages/rompetomp_inertia.yaml` file, and including
-this config:
+If you'd like a different root view, you can change it by creating a `config/packages/rompetomp_inertia.yaml` file
+and including this config:
 ```yaml
 rompetomp_inertia:
   root_view: 'name.twig.html'
 ```
+
+## Set up the frontend adapter
+Find a frontend adapter that you wish to use here https://github.com/inertiajs. The README's are using Laravel's Webpack
+Mix. It's not hard translating this to Webpack Encore, just follow the documentation here: https://symfony.com/doc/current/frontend.html.
 
 ## Making Inertia responses
 To make an Inertia response, inject the `Rompetomp\InertiaBundle\Service\InertiaInterface $inertia` typehint in your 
@@ -105,6 +114,6 @@ class InertiaSubscriber implements EventSubscriberInterface
 ```
 
 ## TODO
-- Investigate if we need a inertia-laravel Middleware-like functionality: https://github.com/inertiajs/inertia-laravel/blob/master/src/Middleware.php
-- Lazy loading of props/shared proprs.
+- Add inertia-laravel Middleware-like functionality: https://github.com/inertiajs/inertia-laravel/blob/master/src/Middleware.php
+- Lazy loading of props/shared props.
 
