@@ -55,6 +55,114 @@ rompetomp_inertia:
 Find a frontend adapter that you wish to use here https://github.com/inertiajs. The README's are using Laravel's Webpack
 Mix. It's not hard translating this to Webpack Encore, just follow the documentation here: https://symfony.com/doc/current/frontend.html.
 
+### Webpack Encore Examples
+For Vue:
+```javascript
+const Encore = require('@symfony/webpack-encore')
+const path = require('path')
+
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+}
+
+Encore
+  .setOutputPath('public/build/'),
+  .setPublicPath('/build')
+  .enableVueLoader()
+  .addAliases({
+    vue$: 'vue/dist/vue.runtime.esm.js',
+    '@': path.resolve('assets/js')
+  })
+  .addEntry('app', './assets/js/app.js')
+  .splitEntryChunks()
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .enableVersioning(Encore.isProduction())
+  .disableSingleRuntimeChunk()
+  .configureBabel(() => {}, {
+    useBuiltIns: 'usage',
+    corejs: 3
+  })
+  .enableSassLoader()
+
+module.exports = Encore.getWebpackConfig()
+```
+
+For React:
+```javascript
+const Encore = require('@symfony/webpack-encore')
+const path = require('path')
+
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+}
+
+Encore
+  .setOutputPath('public/build/'),
+  .setPublicPath('/build')
+  .enableReactPreset()
+  .addAliases({
+    '@': path.resolve('assets/js')
+  })
+  .addEntry('app', './assets/js/app.js')
+  .splitEntryChunks()
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .enableVersioning(Encore.isProduction())
+  .disableSingleRuntimeChunk()
+  .configureBabel(() => {}, {
+    useBuiltIns: 'usage',
+    corejs: 3
+  })
+  .enableSassLoader()
+
+module.exports = Encore.getWebpackConfig()
+```
+
+For Svelte:
+```javascript
+const Encore = require('@symfony/webpack-encore')
+const path = require('path')
+
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+}
+
+Encore
+  .setOutputPath('public/build/'),
+  .setPublicPath('/build')
+  .addLoader({
+    test: /\.(svelte)$/,
+    use: {
+      loader: 'svelte-loader',
+      options: {
+        emitCss: true,
+        hotReload: true,
+      },
+    },
+  })
+  .addAliases({
+    '@': path.resolve('assets/js')
+  })
+  .addEntry('app', './assets/js/app.js')
+  .splitEntryChunks()
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .enableVersioning(Encore.isProduction())
+  .disableSingleRuntimeChunk()
+  .configureBabel(() => {}, {
+    useBuiltIns: 'usage',
+    corejs: 3
+  })
+  .enableSassLoader()
+
+const config = Encore.getWebpackConfig()
+config.resolve.mainFields = ['svelte', 'browser', 'module', 'main']
+config.resolve.extensions =  ['.wasm', '.mjs', '.js', '.json', '.jsx', '.vue', '.ts', '.tsx', '.svelte']
+
+module.exports = config
+```
+
 ## Making Inertia responses
 To make an Inertia response, inject the `Rompetomp\InertiaBundle\Service\InertiaInterface $inertia` typehint in your 
 controller, and use the render function on that Service:
