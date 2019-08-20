@@ -242,6 +242,8 @@ You can also pass these with the function `viewData`, just like you would pass d
 $this->inertia->viewData('title', 'Page Title');
 ```
 
+You can access this data in your layout file under the `viewData` variable.
+
 ## Asset versioning
 Like in Laravel, you can also pass a version to the Inertia services by calling
 ```php
