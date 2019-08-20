@@ -65,6 +65,7 @@ class Inertia implements InertiaInterface
 
     public function render($component, $props = []): Response
     {
+        $props = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
         $url = $request->getRequestUri();
 

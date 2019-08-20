@@ -74,6 +74,37 @@ class InertiaTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
     }
 
+    public function testRenderProps()
+    {
+        $mockRequest = \Mockery::mock(Request::class);
+        $mockRequest->shouldReceive('getRequestUri')->andSet('headers', new HeaderBag(['X-Inertia' => true]));
+        $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
+        $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
+
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+
+
+        $response = $this->inertia->render('Dashboard', ['test' => 123]);
+        $data = json_decode($response->getContent(), true);
+        $this->assertEquals(['test' => 123], $data['props']);
+    }
+
+    public function testRenderSharedProps()
+    {
+        $mockRequest = \Mockery::mock(Request::class);
+        $mockRequest->shouldReceive('getRequestUri')->andSet('headers', new HeaderBag(['X-Inertia' => true]));
+        $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
+        $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
+
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia->share('app_name', 'Testing App 3');
+        $this->inertia->share('app_version', '2.0.0');
+
+        $response = $this->inertia->render('Dashboard', ['test' => 123]);
+        $data = json_decode($response->getContent(), true);
+        $this->assertEquals(['test' => 123, 'app_name' => 'Testing App 3', 'app_version' => '2.0.0'], $data['props']);
+    }
+
     public function testRenderClosureProps()
     {
         $mockRequest = \Mockery::mock(Request::class);
