@@ -11,12 +11,16 @@ class Inertia implements InertiaInterface
 {
     /** @var string */
     protected $rootView;
+
     /** @var \Twig\Environment */
     protected $engine;
+
     /** @var array */
     protected $sharedProps = [];
+
     /** @var \Symfony\Component\HttpFoundation\RequestStack */
     protected $requestStack;
+
     /** @var string */
     protected $version = null;
 
@@ -84,7 +88,7 @@ class Inertia implements InertiaInterface
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
-                'Vary'      => 'Accept',
+                'Vary' => 'Accept',
                 'X-Inertia' => true,
             ]);
         }
