@@ -29,7 +29,7 @@ class InertiaListener
             return;
         }
 
-        if ($request->getMethod() === 'GET'
+        if ('GET' === $request->getMethod()
             && $request->headers->get('X-Inertia-Version') !== $this->inertia->getVersion()
         ) {
             $response = new Response('', 409, ['X-Inertia-Location' => $request->getUri()]);
@@ -43,7 +43,7 @@ class InertiaListener
             return;
         }
         if ($event->getResponse()->isRedirect()
-            && $event->getResponse()->getStatusCode() === 302
+            && 302 === $event->getResponse()->getStatusCode()
             && in_array($event->getRequest()->getMethod(), ['PUT', 'PATCH', 'DELETE'])
         ) {
             $event->getResponse()->setStatusCode(303);

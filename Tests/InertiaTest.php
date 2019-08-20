@@ -22,7 +22,7 @@ class InertiaTest extends TestCase
 
     public function setUp()
     {
-        $this->environment = \Mockery::mock(Environment::class);
+        $this->environment  = \Mockery::mock(Environment::class);
         $this->requestStack = \Mockery::mock(RequestStack::class);
 
         $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
@@ -84,7 +84,7 @@ class InertiaTest extends TestCase
         $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
 
         $response = $this->inertia->render('Dashboard', ['test' => 123]);
-        $data = json_decode($response->getContent(), true);
+        $data     = json_decode($response->getContent(), true);
         $this->assertEquals(['test' => 123], $data['props']);
     }
 
@@ -100,7 +100,7 @@ class InertiaTest extends TestCase
         $this->inertia->share('app_version', '2.0.0');
 
         $response = $this->inertia->render('Dashboard', ['test' => 123]);
-        $data = json_decode($response->getContent(), true);
+        $data     = json_decode($response->getContent(), true);
         $this->assertEquals(['test' => 123, 'app_name' => 'Testing App 3', 'app_version' => '2.0.0'], $data['props']);
     }
 
@@ -136,5 +136,26 @@ class InertiaTest extends TestCase
 
         $response = $this->inertia->render('Dashboard');
         $this->assertInstanceOf(Response::class, $response);
+    }
+    
+    public function testViewDataSingle()
+    {
+        $this->inertia->setViewData('app_name', 'Testing App 1');
+        $this->inertia->setViewData('app_version', '1.0.0');
+        $this->assertEquals('Testing App 1', $this->inertia->getViewData('app_name'));
+        $this->assertEquals('1.0.0', $this->inertia->getViewData('app_version'));
+    }
+
+    public function testViewDataMultiple()
+    {
+        $this->inertia->setViewData('app_name', 'Testing App 2');
+        $this->inertia->setViewData('app_version', '2.0.0');
+        $this->assertEquals(
+            [
+                'app_version' => '2.0.0',
+                'app_name'    => 'Testing App 2',
+            ],
+            $this->inertia->getViewData()
+        );
     }
 }
