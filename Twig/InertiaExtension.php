@@ -22,6 +22,6 @@ class InertiaExtension extends AbstractExtension
 
     public function inertiaFunction($page)
     {
-        return new Markup('<div id="app" data-page="' . htmlspecialchars(json_encode($page)) . '"></div>', 'UTF-8');
+        return new Markup('<div id="app" data-page="'.htmlspecialchars(json_encode($page)).'"></div>', 'UTF-8');
     }
 }

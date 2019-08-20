@@ -26,7 +26,7 @@ class RompetompInertiaExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         $definition = $container->getDefinition('rompetomp_inertia.inertia');

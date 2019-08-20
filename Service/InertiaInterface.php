@@ -59,9 +59,9 @@ interface InertiaInterface
     public function getRootView(): string;
 
     /**
-     * @param       $component Component name.
-     * @param array $props     Component properties.
-     * @param array $view      Templating view data.
+     * @param       $component component name
+     * @param array $props     component properties
+     * @param array $view      templating view data
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
