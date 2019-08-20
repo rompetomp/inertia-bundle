@@ -137,4 +137,25 @@ class InertiaTest extends TestCase
         $response = $this->inertia->render('Dashboard');
         $this->assertInstanceOf(Response::class, $response);
     }
+    
+    public function testViewDataSingle()
+    {
+        $this->inertia->setViewData('app_name', 'Testing App 1');
+        $this->inertia->setViewData('app_version', '1.0.0');
+        $this->assertEquals('Testing App 1', $this->inertia->getViewData('app_name'));
+        $this->assertEquals('1.0.0', $this->inertia->getViewData('app_version'));
+    }
+
+    public function testViewDataMultiple()
+    {
+        $this->inertia->setViewData('app_name', 'Testing App 2');
+        $this->inertia->setViewData('app_version', '2.0.0');
+        $this->assertEquals(
+            [
+                'app_version' => '2.0.0',
+                'app_name'    => 'Testing App 2',
+            ],
+            $this->inertia->getViewData()
+        );
+    }
 }

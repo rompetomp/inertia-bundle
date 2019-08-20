@@ -18,6 +18,9 @@ class Inertia implements InertiaInterface
     /** @var array */
     protected $sharedProps = [];
 
+    /** @var array */
+    protected $sharedViewData = [];
+
     /** @var \Symfony\Component\HttpFoundation\RequestStack */
     protected $requestStack;
 
@@ -52,6 +55,20 @@ class Inertia implements InertiaInterface
         return $this->sharedProps;
     }
 
+    public function setViewData(string $key, $value = null): void
+    {
+        $this->sharedViewData[$key] = $value;
+    }
+
+    public function getViewData(string $key = null)
+    {
+        if ($key) {
+            return $this->sharedViewData[$key] ?? null;
+        }
+
+        return $this->sharedViewData;
+    }
+
     public function version(string $version): void
     {
         $this->version = $version;
@@ -67,8 +84,9 @@ class Inertia implements InertiaInterface
         return $this->rootView;
     }
 
-    public function render($component, $props = []): Response
+    public function render($component, $props = [], $view = []): Response
     {
+        $view = array_merge($this->sharedViewData, $view);
         $props   = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
         $url     = $request->getRequestUri();
@@ -94,7 +112,7 @@ class Inertia implements InertiaInterface
         }
 
         $response = new Response();
-        $response->setContent($this->engine->render($this->rootView, compact('page')));
+        $response->setContent($this->engine->render($this->rootView, compact('page', 'view')));
 
         return $response;
     }

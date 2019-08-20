@@ -29,6 +29,21 @@ interface InertiaInterface
     public function getShared(string $key = null);
 
     /**
+     * Adds global view data for the templating system.
+     *
+     * @param string $key
+     * @param mixed  $value
+     */
+    public function setViewData(string $key, $value = null): void;
+
+    /**
+     * @param string|null $key
+     *
+     * @return mixed
+     */
+    public function getViewData(string $key = null);
+
+    /**
      * @param string $version
      */
     public function version(string $version): void;
@@ -46,8 +61,9 @@ interface InertiaInterface
     /**
      * @param       $component Component name.
      * @param array $props     Component properties.
+     * @param array $view      Templating view data.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($component, $props = []): Response;
+    public function render($component, $props = [], $view = []): Response;
 }
