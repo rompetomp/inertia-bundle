@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Interface InertiaInterface.
  *
- * @author Hannes Vermeire <hannes@codedor.be>
+ * @author  Hannes Vermeire <hannes@codedor.be>
  *
  * @since   2019-08-09
  */
@@ -34,7 +34,7 @@ interface InertiaInterface
      * @param string $key
      * @param mixed  $value
      */
-    public function setViewData(string $key, $value = null): void;
+    public function viewData(string $key, $value = null): void;
 
     /**
      * @param string|null $key
@@ -59,11 +59,11 @@ interface InertiaInterface
     public function getRootView(): string;
 
     /**
-     * @param       $component component name
-     * @param array $props     component properties
-     * @param array $view      templating view data
+     * @param string $component component name
+     * @param array  $props     component properties
+     * @param array  $viewData  templating view data
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($component, $props = [], $view = []): Response;
+    public function render($component, $props = [], $viewData = []): Response;
 }

@@ -1,5 +1,6 @@
 # Inertia.js Symfony Adapter
 [![Build Status](https://travis-ci.org/rompetomp/inertia-bundle.svg?branch=master)](https://travis-ci.org/rompetomp/inertia-bundle)
+[![StyleCI](https://github.styleci.io/repos/201484253/shield?style=flat)](https://github.styleci.io/repos/201484253)
 
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
 for Symfony 4.
@@ -167,6 +168,7 @@ module.exports = config
 To make an Inertia response, inject the `Rompetomp\InertiaBundle\Service\InertiaInterface $inertia` typehint in your 
 controller, and use the render function on that Service:
 ```php
+<?php
 namespace App\Controller;
 
 use Rompetomp\InertiaBundle\Service\InertiaInterface;
@@ -176,7 +178,7 @@ class DashboardController extends AbstractController
 {
     public function index(InertiaInterface $inertia)
     {
-        return $inertia->render('Dashboard');
+        return $inertia->render('Dashboard', ['prop' => 'propValue']);
     }
 }
 ```
@@ -227,6 +229,17 @@ class InertiaSubscriber implements EventSubscriberInterface
         );
     }
 }
+```
+
+## View data
+If you want to pass data to your root template, you can do that by passing a third parameter to the render function:
+```php
+return $inertia->render('Dashboard', ['prop' => 'propValue'], ['title' => 'Page Title']);
+```
+
+You can also pass these with the function `viewData`, just like you would pass data to the `share` function:
+```php
+$this->inertia->viewData('title', 'Page Title');
 ```
 
 ## Asset versioning

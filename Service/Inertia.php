@@ -55,7 +55,7 @@ class Inertia implements InertiaInterface
         return $this->sharedProps;
     }
 
-    public function setViewData(string $key, $value = null): void
+    public function viewData(string $key, $value = null): void
     {
         $this->sharedViewData[$key] = $value;
     }
@@ -84,9 +84,9 @@ class Inertia implements InertiaInterface
         return $this->rootView;
     }
 
-    public function render($component, $props = [], $view = []): Response
+    public function render($component, $props = [], $viewData = []): Response
     {
-        $view = array_merge($this->sharedViewData, $view);
+        $viewData = array_merge($this->sharedViewData, $viewData);
         $props = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
         $url = $request->getRequestUri();
@@ -112,7 +112,7 @@ class Inertia implements InertiaInterface
         }
 
         $response = new Response();
-        $response->setContent($this->engine->render($this->rootView, compact('page', 'view')));
+        $response->setContent($this->engine->render($this->rootView, compact('page', 'viewData')));
 
         return $response;
     }
