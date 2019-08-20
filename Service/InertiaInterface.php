@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 interface InertiaInterface
 {
     /**
+     * Adds global component properties for the templating system.
+     *
      * @param string $key
      * @param mixed  $value
      */
@@ -42,8 +44,8 @@ interface InertiaInterface
     public function getRootView(): string;
 
     /**
-     * @param       $component
-     * @param array $props
+     * @param       $component Component name.
+     * @param array $props     Component properties.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -33,8 +33,8 @@ class Inertia implements InertiaInterface
      */
     public function __construct(string $rootView, Environment $engine, RequestStack $requestStack)
     {
-        $this->engine = $engine;
-        $this->rootView = $rootView;
+        $this->engine       = $engine;
+        $this->rootView     = $rootView;
         $this->requestStack = $requestStack;
     }
 
@@ -69,11 +69,11 @@ class Inertia implements InertiaInterface
 
     public function render($component, $props = []): Response
     {
-        $props = array_merge($this->sharedProps, $props);
+        $props   = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
-        $url = $request->getRequestUri();
+        $url     = $request->getRequestUri();
 
-        $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
+        $only  = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
         $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)
             ? self::array_only($props, $only) : $props;
 
@@ -84,11 +84,11 @@ class Inertia implements InertiaInterface
         });
 
         $version = $this->version;
-        $page = compact('component', 'props', 'url', 'version');
+        $page    = compact('component', 'props', 'url', 'version');
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
-                'Vary' => 'Accept',
+                'Vary'      => 'Accept',
                 'X-Inertia' => true,
             ]);
         }
