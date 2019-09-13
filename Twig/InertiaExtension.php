@@ -11,13 +11,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Class InertiaExtension.
  *
- * @author  Hannes Vermeire <hannes@codedor.be>²²
+ * @author  Hannes Vermeire <hannes@codedor.be>
  *
  * @since   2019-08-09
  */
 class InertiaExtension extends AbstractExtension
 {
-
     /**
      * @var ContainerInterface
      */
