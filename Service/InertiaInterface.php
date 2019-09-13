@@ -49,6 +49,21 @@ interface InertiaInterface
     public function version(string $version): void;
 
     /**
+     * Adds a context for the serializer.
+     *
+     * @param string $key
+     * @param mixed  $value
+     */
+    public function context(string $key, $value = null): void;
+
+    /**
+     * @param string|null $key
+     *
+     * @return mixed
+     */
+    public function getContext(string $key = null);
+
+    /**
      * @return string
      */
     public function getVersion(): ?string;
@@ -62,8 +77,9 @@ interface InertiaInterface
      * @param string $component component name
      * @param array  $props     component properties
      * @param array  $viewData  templating view data
+     * @param array  $context   serialization context
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($component, $props = [], $viewData = []): Response;
+    public function render($component, $props = [], $viewData = [], $context = []): Response;
 }
