@@ -158,4 +158,21 @@ class InertiaTest extends TestCase
             $this->inertia->getViewData()
         );
     }
+
+    public function testContextSingle()
+    {
+        $this->inertia->context('groups', [ 'group1', 'group2' ]);
+        $this->assertEquals([ 'group1', 'group2' ], $this->inertia->getContext('groups'));
+    }
+
+    public function testContextMultiple()
+    {
+        $this->inertia->context('groups', [ 'group1', 'group2' ]);
+        $this->assertEquals(
+            [
+                'groups'    =>  [ 'group1', 'group2' ],
+            ],
+            $this->inertia->getContext()
+        );
+    }
 }

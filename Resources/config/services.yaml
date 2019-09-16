@@ -12,6 +12,8 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+    arguments:
+      $container: '@service_container'
 
   Rompetomp\InertiaBundle\EventListener\InertiaListener:
     tags:
