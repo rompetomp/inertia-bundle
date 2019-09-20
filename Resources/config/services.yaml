@@ -5,6 +5,7 @@ services:
     arguments:
       $engine: '@twig'
       $requestStack: '@request_stack'
+      $serializer: '@serializer'
   Rompetomp\InertiaBundle\Service\InertiaInterface: '@rompetomp_inertia.inertia'
 
   rompetomp_inertia.twig_extension:
@@ -12,8 +13,6 @@ services:
     public: false
     tags:
       - { name: twig.extension }
-    arguments:
-      $container: '@service_container'
 
   Rompetomp\InertiaBundle\EventListener\InertiaListener:
     tags:
