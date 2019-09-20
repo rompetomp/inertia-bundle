@@ -129,7 +129,7 @@ class Inertia implements InertiaInterface
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
-                'Vary'      => 'Accept',
+                'Vary' => 'Accept',
                 'X-Inertia' => true,
             ]);
         }
@@ -148,7 +148,7 @@ class Inertia implements InertiaInterface
      * @param array $page
      * @param array $context
      *
-     * @return array returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}.
+     * @return array @return array returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}
      */
     private function serialize(array $page, $context = []): array
     {
