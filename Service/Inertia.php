@@ -43,10 +43,10 @@ class Inertia implements InertiaInterface
      */
     public function __construct(string $rootView, Environment $engine, RequestStack $requestStack, ?SerializerInterface $serializer = null)
     {
-        $this->engine       = $engine;
-        $this->rootView     = $rootView;
+        $this->engine = $engine;
+        $this->rootView = $rootView;
         $this->requestStack = $requestStack;
-        $this->serializer   = $serializer;
+        $this->serializer = $serializer;
     }
 
     public function share(string $key, $value = null): void
@@ -108,13 +108,13 @@ class Inertia implements InertiaInterface
 
     public function render($component, $props = [], $viewData = [], $context = []): Response
     {
-        $context  = array_merge($this->sharedContext, $context);
+        $context = array_merge($this->sharedContext, $context);
         $viewData = array_merge($this->sharedViewData, $viewData);
-        $props    = array_merge($this->sharedProps, $props);
-        $request  = $this->requestStack->getCurrentRequest();
-        $url      = $request->getRequestUri();
+        $props = array_merge($this->sharedProps, $props);
+        $request = $this->requestStack->getCurrentRequest();
+        $url = $request->getRequestUri();
 
-        $only  = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
+        $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data')));
         $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)
             ? self::array_only($props, $only) : $props;
 
@@ -125,7 +125,7 @@ class Inertia implements InertiaInterface
         });
 
         $version = $this->version;
-        $page    = $this->serialize(compact('component', 'props', 'url', 'version'), $context);
+        $page = $this->serialize(compact('component', 'props', 'url', 'version'), $context);
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
@@ -148,7 +148,7 @@ class Inertia implements InertiaInterface
      * @param array $page
      * @param array $context
      *
-     * @return array Returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}.
+     * @return array returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}.
      */
     private function serialize(array $page, $context = []): array
     {
