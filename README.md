@@ -3,17 +3,18 @@
 [![StyleCI](https://github.styleci.io/repos/201484253/shield?style=flat)](https://github.styleci.io/repos/201484253)
 
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
-for Symfony 4.
+for Symfony 5.
 
 ## Installation
-Install using Composer:
-```console
-composer require rompetomp/inertia-bundle
-```
-You will also need the twig and encore recipe if you don't have it already:
+First, make sure you have the twig and encore recipe:
 ```console
 composer require twig
 composer require encore
+```
+
+Install using Composer:
+```console
+composer require rompetomp/inertia-bundle
 ```
 
 ## Setup root template
@@ -67,7 +68,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-  .setOutputPath('public/build/'),
+  .setOutputPath('public/build/')
   .setPublicPath('/build')
   .enableVueLoader()
   .addAliases({
