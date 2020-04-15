@@ -15,15 +15,15 @@
     }
   },
   "require": {
-    "php": "^7.1",
-    "symfony/config": "^4.3|^5.0",
-    "symfony/dependency-injection": "^4.3|^5.0",
-    "symfony/http-kernel": "^4.3|^5.0",
-    "twig/twig": "^2.11"
+    "php": "^7.3",
+    "symfony/config": "^4.4|^5.0",
+    "symfony/dependency-injection": "^4.4|^5.0",
+    "symfony/http-kernel": "^4.4|^5.0",
+    "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^4.3|^5.0",
+    "symfony/phpunit-bridge": "^4.4|^5.0",
     "mockery/mockery": "^1.2",
-    "symfony/var-dumper": "^4.3|^5.0"
+    "symfony/var-dumper": "^4.4|^5.0"
   }
 }
