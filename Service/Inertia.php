@@ -5,6 +5,7 @@ namespace Rompetomp\InertiaBundle\Service;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 use Twig\Environment;
 
 class Inertia implements InertiaInterface
@@ -14,6 +15,9 @@ class Inertia implements InertiaInterface
 
     /** @var \Twig\Environment */
     protected $engine;
+
+    /** @var SerializerInterface */
+    protected $serializer;
 
     /** @var array */
     protected $sharedProps = [];
@@ -37,11 +41,12 @@ class Inertia implements InertiaInterface
      * @param \Twig\Environment                              $engine
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    public function __construct(string $rootView, Environment $engine, RequestStack $requestStack)
+    public function __construct(string $rootView, Environment $engine, RequestStack $requestStack, ?SerializerInterface $serializer = null)
     {
         $this->engine = $engine;
         $this->rootView = $rootView;
         $this->requestStack = $requestStack;
+        $this->serializer = $serializer;
     }
 
     public function share(string $key, $value = null): void
@@ -120,7 +125,7 @@ class Inertia implements InertiaInterface
         });
 
         $version = $this->version;
-        $page = compact('component', 'props', 'url', 'version');
+        $page = $this->serialize(compact('component', 'props', 'url', 'version'), $context);
 
         if ($request->headers->get('X-Inertia')) {
             return new JsonResponse($page, 200, [
@@ -130,9 +135,32 @@ class Inertia implements InertiaInterface
         }
 
         $response = new Response();
-        $response->setContent($this->engine->render($this->rootView, compact('page', 'viewData', 'context')));
+        $response->setContent($this->engine->render($this->rootView, compact('page', 'viewData')));
 
         return $response;
+    }
+
+    /**
+     * Serializes the given objects with the given context if the Symfony Serializer is available. If not, uses `json_encode`.
+     *
+     * @see https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/AJAX_Security_Cheat_Sheet.md#always-return-json-with-an-object-on-the-outside
+     *
+     * @param array $page
+     * @param array $context
+     *
+     * @return array @return array returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}
+     */
+    private function serialize(array $page, $context = []): array
+    {
+        if (null !== $this->serializer) {
+            $json = $this->serializer->serialize($page, 'json', array_merge([
+                'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
+            ], $context));
+        } else {
+            $json = json_encode($page);
+        }
+
+        return json_decode($json, true) ?? [];
     }
 
     private static function array_only($array, $keys)

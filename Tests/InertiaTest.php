@@ -19,13 +19,16 @@ class InertiaTest extends TestCase
     private $environment;
     /** @var \Mockery\LegacyMockInterface|\Mockery\MockInterface|\Symfony\Component\HttpFoundation\RequestStack */
     private $requestStack;
+    /** @var \Mockery\LegacyMockInterface|\Mockery\MockInterface|\Symfony\Component\Serializer\Serializer|null */
+    private $serializer;
 
     public function setUp()
     {
+        $this->serializer   = null;
         $this->environment  = \Mockery::mock(Environment::class);
         $this->requestStack = \Mockery::mock(RequestStack::class);
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
     }
 
     public function testSharedSingle()
@@ -68,7 +71,7 @@ class InertiaTest extends TestCase
         $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
         $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
 
         $response = $this->inertia->render('Dashboard');
         $this->assertInstanceOf(JsonResponse::class, $response);
@@ -81,7 +84,7 @@ class InertiaTest extends TestCase
         $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
         $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
 
         $response = $this->inertia->render('Dashboard', ['test' => 123]);
         $data     = json_decode($response->getContent(), true);
@@ -95,7 +98,7 @@ class InertiaTest extends TestCase
         $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
         $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
         $this->inertia->share('app_name', 'Testing App 3');
         $this->inertia->share('app_version', '2.0.0');
 
@@ -111,7 +114,7 @@ class InertiaTest extends TestCase
         $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
         $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
 
         /** @var JsonResponse $response */
         $response = $this->inertia->render('Dashboard', ['test' => function () {
@@ -132,7 +135,7 @@ class InertiaTest extends TestCase
 
         $this->environment->allows('render')->andReturn('<div>123</div>');
 
-        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
 
         $response = $this->inertia->render('Dashboard');
         $this->assertInstanceOf(Response::class, $response);
