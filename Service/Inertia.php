@@ -5,6 +5,7 @@ namespace Rompetomp\InertiaBundle\Service;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Twig\Environment;
 
@@ -155,6 +156,7 @@ class Inertia implements InertiaInterface
         if (null !== $this->serializer) {
             $json = $this->serializer->serialize($page, 'json', array_merge([
                 'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function() { return null; },
             ], $context));
         } else {
             $json = json_encode($page);
