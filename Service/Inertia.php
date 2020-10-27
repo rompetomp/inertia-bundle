@@ -37,10 +37,6 @@ class Inertia implements InertiaInterface
 
     /**
      * Inertia constructor.
-     *
-     * @param string                                         $rootView
-     * @param \Twig\Environment                              $engine
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(string $rootView, Environment $engine, RequestStack $requestStack, ?SerializerInterface $serializer = null)
     {
@@ -146,7 +142,6 @@ class Inertia implements InertiaInterface
      *
      * @see https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/AJAX_Security_Cheat_Sheet.md#always-return-json-with-an-object-on-the-outside
      *
-     * @param array $page
      * @param array $context
      *
      * @return array @return array returns a decoded array of the previously JSON-encoded data, so it can safely be given to {@see JsonResponse}
@@ -156,7 +151,7 @@ class Inertia implements InertiaInterface
         if (null !== $this->serializer) {
             $json = $this->serializer->serialize($page, 'json', array_merge([
                 'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function() { return null; },
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function () { return null; },
             ], $context));
         } else {
             $json = json_encode($page);
