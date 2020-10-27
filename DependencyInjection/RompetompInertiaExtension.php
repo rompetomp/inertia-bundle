@@ -19,9 +19,6 @@ class RompetompInertiaExtension extends ConfigurableExtension
     /**
      * Configures the passed container according to the merged configuration.
      *
-     * @param array                                                   $mergedConfig
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     *
      * @throws \Exception
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
