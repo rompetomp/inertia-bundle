@@ -16,14 +16,14 @@
   },
   "require": {
     "php": "^7.3",
-    "symfony/config": "^4.4|^5.0",
-    "symfony/dependency-injection": "^4.4|^5.0",
-    "symfony/http-kernel": "^4.4|^5.0",
+    "symfony/config": "^4.4|^5.1.7",
+    "symfony/dependency-injection": "^4.4|^5.1.7",
+    "symfony/http-kernel": "^4.4|^5.1.7",
     "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^4.4|^5.0",
+    "symfony/phpunit-bridge": "^4.4|^5.1.7",
     "mockery/mockery": "^1.2",
-    "symfony/var-dumper": "^4.4|^5.0"
+    "symfony/var-dumper": "^4.4|^5.1.7"
   }
 }
