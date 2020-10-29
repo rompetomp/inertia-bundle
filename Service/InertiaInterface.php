@@ -56,6 +56,8 @@ interface InertiaInterface
      */
     public function getVersion(): ?string;
 
+    public function setRootView(string $rootView): void;
+
     public function getRootView(): string;
 
     /**

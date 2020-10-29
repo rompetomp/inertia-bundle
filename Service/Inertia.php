@@ -98,6 +98,11 @@ class Inertia implements InertiaInterface
         return $this->version;
     }
 
+    public function setRootView(string $rootView): void
+    {
+        $this->rootView = $rootView;
+    }
+
     public function getRootView(): string
     {
         return $this->rootView;

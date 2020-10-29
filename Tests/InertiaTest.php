@@ -22,7 +22,7 @@ class InertiaTest extends TestCase
     /** @var \Mockery\LegacyMockInterface|\Mockery\MockInterface|\Symfony\Component\Serializer\Serializer|null */
     private $serializer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->serializer   = null;
         $this->environment  = \Mockery::mock(Environment::class);
@@ -62,6 +62,12 @@ class InertiaTest extends TestCase
     public function testRootView()
     {
         $this->assertEquals('app.twig.html', $this->inertia->getRootView());
+    }
+
+    public function testSetRootView()
+    {
+        $this->inertia->setRootView('other-root.twig.html');
+        $this->assertEquals('other-root.twig.html', $this->inertia->getRootView());
     }
 
     public function testRenderJSON()
