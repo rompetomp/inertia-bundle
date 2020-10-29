@@ -6,10 +6,11 @@ This is a Inertia.js server-side adapter based on [inertia-laravel](https://gith
 for Symfony 5.
 
 ## Installation
-First, make sure you have the twig and encore recipe:
+First, make sure you have the twig, encore and serializer recipe:
 ```console
 composer require twig
 composer require encore
+composer require symfony/serializer-pack
 ```
 
 Install using Composer:
