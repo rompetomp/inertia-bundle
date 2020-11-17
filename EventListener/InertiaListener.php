@@ -17,9 +17,15 @@ class InertiaListener
      */
     protected $inertia;
 
-    public function __construct(InertiaInterface $inertia)
+    /**
+     * @var bool
+     */
+    protected $debug;
+
+    public function __construct(InertiaInterface $inertia, bool $debug)
     {
         $this->inertia = $inertia;
+        $this->debug = $debug;
     }
 
     public function onKernelRequest(RequestEvent $event)
@@ -42,6 +48,11 @@ class InertiaListener
         if (!$event->getRequest()->headers->get('X-Inertia')) {
             return;
         }
+
+        if ($this->debug && $event->getRequest()->isXmlHttpRequest()) {
+            $event->getResponse()->headers->set('Symfony-Debug-Toolbar-Replace', 1);
+        }
+
         if ($event->getResponse()->isRedirect()
             && 302 === $event->getResponse()->getStatusCode()
             && in_array($event->getRequest()->getMethod(), ['PUT', 'PATCH', 'DELETE'])

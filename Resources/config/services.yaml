@@ -20,3 +20,4 @@ services:
       - { name: kernel.event_listener, event: kernel.response }
     arguments:
       $inertia: '@rompetomp_inertia.inertia'
+      $debug: '%kernel.debug%'
