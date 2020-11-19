@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Twig\Environment;
 
@@ -157,12 +158,13 @@ class Inertia implements InertiaInterface
             $json = $this->serializer->serialize($page, 'json', array_merge([
                 'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
                 AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function () { return null; },
+                AbstractObjectNormalizer::PRESERVE_EMPTY_OBJECTS => true,
             ], $context));
         } else {
             $json = json_encode($page);
         }
 
-        return json_decode($json, true) ?? [];
+        return (array) json_decode($json, false);
     }
 
     private static function array_only($array, $keys)
