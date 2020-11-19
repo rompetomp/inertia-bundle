@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Twig\Environment;
 
 class InertiaTest extends TestCase
@@ -183,5 +186,73 @@ class InertiaTest extends TestCase
             ],
             $this->inertia->getContext()
         );
+    }
+
+    public function testTypesArePreservedUsingJsonEncode()
+    {
+        $mockRequest = \Mockery::mock(Request::class);
+        $mockRequest->shouldReceive('getRequestUri')->andSet('headers', new HeaderBag(['X-Inertia' => true]));
+        $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
+        $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
+
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
+
+        $this->innerTestTypesArePreserved(false);
+    }
+
+    public function testTypesArePreservedUsingSerializer()
+    {
+        $mockRequest = \Mockery::mock(Request::class);
+        $mockRequest->shouldReceive('getRequestUri')->andSet('headers', new HeaderBag(['X-Inertia' => true]));
+        $mockRequest->allows()->getRequestUri()->andReturns('https://example.test');
+        $this->requestStack->allows()->getCurrentRequest()->andReturns($mockRequest);
+
+        $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $this->inertia = new Inertia('app.twig.html', $this->environment, $this->requestStack, $this->serializer);
+
+        $this->innerTestTypesArePreserved(true);
+    }
+
+    private function innerTestTypesArePreserved($usingSerializer = false)
+    {
+        $props = [
+            'integer'               => 123,
+            'float'                 => 1.23,
+            'string'                => 'test',
+            'null'                  => null,
+            'true'                  => true,
+            'false'                 => false,
+            'object'                => new \DateTime(),
+            'empty_object'          => new \stdClass(),
+            'iterable_object'       => new \ArrayObject([1, 2, 3]),
+            'empty_iterable_object' => new \ArrayObject(),
+            'array'                 => [1, 2, 3],
+            'empty_array'           => [],
+            'associative_array'     => ['test' => 'test']
+        ];
+
+        $response      = $this->inertia->render('Dashboard', $props);
+        $data          = json_decode($response->getContent(), false);
+        $responseProps = (array) $data->props;
+
+        $this->assertIsInt($responseProps['integer']);
+        $this->assertIsFloat($responseProps['float']);
+        $this->assertIsString($responseProps['string']);
+        $this->assertNull($responseProps['null']);
+        $this->assertTrue($responseProps['true']);
+        $this->assertFalse($responseProps['false']);
+        $this->assertIsObject($responseProps['object']);
+        $this->assertIsObject($responseProps['empty_object']);
+
+        if (!$usingSerializer) {
+            $this->assertIsObject($responseProps['iterable_object']);
+        } else {
+            $this->assertIsArray($responseProps['iterable_object']);
+        }
+
+        $this->assertIsObject($responseProps['empty_iterable_object']);
+        $this->assertIsArray($responseProps['array']);
+        $this->assertIsArray($responseProps['empty_array']);
+        $this->assertIsObject($responseProps['associative_array']);
     }
 }

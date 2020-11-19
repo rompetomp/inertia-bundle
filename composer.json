@@ -22,8 +22,10 @@
     "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^4.4|^5.1.7",
     "mockery/mockery": "^1.2",
+    "symfony/phpunit-bridge": "^4.4|^5.1.7",
+    "symfony/property-access": "^5.1",
+    "symfony/serializer": "^5.1",
     "symfony/var-dumper": "^4.4|^5.1.7"
   }
 }
