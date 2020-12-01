@@ -251,3 +251,6 @@ Like in Laravel, you can also pass a version to the Inertia services by calling
 ```php
 $inertia->version($version);
 ```
+
+## Projects using this bundle
+- [Ping CRM on Symfony](https://github.com/aleksblendwerk/pingcrm-symfony) - The official Inertia.js demo app, ported to Symfony
