@@ -1,5 +1,5 @@
 # Inertia.js Symfony Adapter
-[![Build Status](https://travis-ci.org/rompetomp/inertia-bundle.svg?branch=master)](https://travis-ci.org/rompetomp/inertia-bundle)
+[![CI](https://github.com/rompetomp/inertia-bundle/workflows/CI/badge.svg)](https://github.com/rompetomp/inertia-bundle/actions)
 [![StyleCI](https://github.styleci.io/repos/201484253/shield?style=flat)](https://github.styleci.io/repos/201484253)
 
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
