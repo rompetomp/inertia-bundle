@@ -17,6 +17,9 @@ Install using Composer:
 ```console
 composer require rompetomp/inertia-bundle
 ```
+```console
+yarn add @inertiajs/inertia
+```
 
 ## Setup root template
 The first step to using Inertia is creating a root template. We recommend using `app.html.twig`. This template should
@@ -60,6 +63,10 @@ Mix. It's not hard translating this to Webpack Encore, just follow the documenta
 
 ### Webpack Encore Examples
 For Vue:
+```console
+yarn add @inertiajs/inertia-vue
+```
+
 ```javascript
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -89,6 +96,21 @@ Encore
   .enableSassLoader()
 
 module.exports = Encore.getWebpackConfig()
+```
+
+```javascript
+//assets/app.js
+import { createInertiaApp } from '@inertiajs/inertia-vue'
+import Vue from "vue";
+
+createInertiaApp({
+    resolve: name => require(`./Pages/${name}`),
+    setup({ el, app, props }) {
+        new Vue({
+            render: h => h(app, props),
+        }).$mount(el)
+    },
+})
 ```
 
 For React:
