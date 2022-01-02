@@ -154,7 +154,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-  .setOutputPath('public/build/'),
+  .setOutputPath('public/build/')
   .setPublicPath('/build')
   .addLoader({
     test: /\.(svelte)$/,
