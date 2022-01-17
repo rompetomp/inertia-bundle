@@ -3,14 +3,12 @@
 [![StyleCI](https://github.styleci.io/repos/201484253/shield?style=flat)](https://github.styleci.io/repos/201484253)
 
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
-for Symfony 5.
+for Symfony 5 and 6.
 
 ## Installation
 First, make sure you have the twig, encore and serializer recipe:
 ```console
-composer require twig
-composer require encore
-composer require symfony/serializer-pack
+composer require twig encore symfony/serializer-pack
 ```
 
 Install using Composer:
