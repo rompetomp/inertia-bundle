@@ -15,7 +15,7 @@ use Twig\TwigFunction;
  */
 class InertiaExtension extends AbstractExtension
 {
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [new TwigFunction('inertia', [$this, 'inertiaFunction'])];
     }
