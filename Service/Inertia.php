@@ -159,6 +159,7 @@ class Inertia implements InertiaInterface
                 'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS,
                 AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function () { return null; },
                 AbstractObjectNormalizer::PRESERVE_EMPTY_OBJECTS => true,
+                AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
             ], $context));
         } else {
             $json = json_encode($page);
