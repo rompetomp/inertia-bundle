@@ -274,3 +274,4 @@ $inertia->version($version);
 
 ## Projects using this bundle
 - [Ping CRM on Symfony](https://github.com/aleksblendwerk/pingcrm-symfony) - The official Inertia.js demo app, ported to Symfony
+- [Symfony + Inertia + Vuejs Template](https://github.com/cydrickn/symfony-intertia) - Github template repository that uses Symfony, Inertia and Vuejs

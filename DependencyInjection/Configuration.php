@@ -25,6 +25,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('root_view')->defaultValue('app.html.twig')->end()
+                ->arrayNode('ssr')
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                        ->scalarNode('url')->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

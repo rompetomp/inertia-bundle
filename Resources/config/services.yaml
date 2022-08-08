@@ -8,9 +8,20 @@ services:
       $serializer: '@serializer'
   Rompetomp\InertiaBundle\Service\InertiaInterface: '@rompetomp_inertia.inertia'
 
+  rompetomp_inertia.gateway:
+    class: Rompetomp\InertiaBundle\Ssr\HttpGateway
+    arguments:
+      $httpClient: '@Symfony\Contracts\HttpClient\HttpClientInterface'
+      $inertia: '@rompetomp_inertia.inertia'
+
+  Rompetomp\InertiaBundle\Ssr\GatewayInterface: '@rompetomp_inertia.gateway'
+
   rompetomp_inertia.twig_extension:
     class: Rompetomp\InertiaBundle\Twig\InertiaExtension
     public: false
+    arguments:
+      $inertia: '@rompetomp_inertia.inertia'
+      $gateway: '@rompetomp_inertia.gateway'
     tags:
       - { name: twig.extension }
 

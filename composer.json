@@ -16,10 +16,12 @@
   },
   "require": {
     "php": "^7.3|^8",
+    "ext-json": "*",
     "symfony/config": "^4.4|^5.1.7|^6.0",
     "symfony/dependency-injection": "^4.4|^5.1.7|^6.0",
     "symfony/http-kernel": "^4.4|^5.1.7|^6.0",
-    "twig/twig": "^2.12|^3.0"
+    "twig/twig": "^2.12|^3.0",
+    "symfony/http-client": "^4.4|^5.1.7|^6.1"
   },
   "require-dev": {
     "mockery/mockery": "^1.2",
