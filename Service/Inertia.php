@@ -36,6 +36,12 @@ class Inertia implements InertiaInterface
     /** @var string */
     protected $version = null;
 
+    /** @var bool */
+    protected $useSsr = false;
+
+    /** @var string */
+    protected $ssrUrl = '';
+
     /**
      * Inertia constructor.
      */
@@ -107,6 +113,26 @@ class Inertia implements InertiaInterface
     public function getRootView(): string
     {
         return $this->rootView;
+    }
+
+    public function useSsr(bool $useSsr): void
+    {
+        $this->useSsr = $useSsr;
+    }
+
+    public function isSsr(): bool
+    {
+        return $this->useSsr;
+    }
+
+    public function setSsrUrl(string $url): void
+    {
+        $this->ssrUrl = $url;
+    }
+
+    public function getSsrUrl(): string
+    {
+        return $this->ssrUrl;
     }
 
     public function render($component, $props = [], $viewData = [], $context = []): Response

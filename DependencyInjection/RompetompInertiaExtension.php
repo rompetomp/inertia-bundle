@@ -28,5 +28,7 @@ class RompetompInertiaExtension extends ConfigurableExtension
 
         $definition = $container->getDefinition('rompetomp_inertia.inertia');
         $definition->setArgument('$rootView', $mergedConfig['root_view']);
+        $definition->addMethodCall('useSsr', [$mergedConfig['ssr']['enabled']]);
+        $definition->addMethodCall('setSsrUrl', [$mergedConfig['ssr']['url']]);
     }
 }

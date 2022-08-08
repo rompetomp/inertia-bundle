@@ -61,6 +61,26 @@ interface InertiaInterface
     public function getRootView(): string;
 
     /**
+     * Set if it will use ssr.
+     */
+    public function useSsr(bool $useSsr): void;
+
+    /**
+     * Check if it using ssr.
+     */
+    public function isSsr(): bool;
+
+    /**
+     * Set the ssr url where it will fetch its content.
+     */
+    public function setSsrUrl(string $url): void;
+
+    /**
+     * Get the ssr url where it will fetch its content.
+     */
+    public function getSsrUrl(): string;
+
+    /**
      * @param string $component component name
      * @param array  $props     component properties
      * @param array  $viewData  templating view data
