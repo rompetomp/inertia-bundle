@@ -2,7 +2,10 @@
 
 namespace Rompetomp\InertiaBundle\Service;
 
+use Rompetomp\InertiaBundle\LazyProp;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -12,6 +15,8 @@ use Twig\Environment;
 
 class Inertia implements InertiaInterface
 {
+    use ContainerAwareTrait;
+
     /** @var string */
     protected $rootView;
 
@@ -145,10 +150,15 @@ class Inertia implements InertiaInterface
 
         $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data') ?? ''));
         $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)
-            ? self::array_only($props, $only) : $props;
+            ? self::array_only($props, $only)
+            : array_filter($props, function ($prop) {
+                return !($prop instanceof LazyProp);
+            });
 
         array_walk_recursive($props, function (&$prop) {
-            if ($prop instanceof \Closure) {
+            if (is_callable($prop) || $prop instanceof LazyProp) {
+                $prop = call_user_func($prop);
+            } elseif ($prop instanceof \Closure) {
                 $prop = $prop();
             }
         });
@@ -167,6 +177,45 @@ class Inertia implements InertiaInterface
         $response->setContent($this->engine->render($this->rootView, compact('page', 'viewData')));
 
         return $response;
+    }
+
+    public function location($url): Response
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($url instanceof RedirectResponse) {
+            $url = $url->getTargetUrl();
+        }
+
+        if ($request->headers->has('X-Inertia')) {
+            return new Response('', 409, ['X-Inertia-Location' => $url]);
+        }
+
+        return new RedirectResponse($url);
+    }
+
+    /**
+     * @param callable|string|array $callback
+     */
+    public function lazy($callback): LazyProp
+    {
+        if (is_string($callback)) {
+            $callback = explode('::', $callback, 2);
+        }
+
+        if (is_array($callback)) {
+            list($name, $action) = array_pad($callback, 2, null);
+            $useContainer = is_string($name) && $this->container->has($name);
+            if ($useContainer && !is_null($action)) {
+                return new LazyProp([$this->container->get($name), $action]);
+            }
+
+            if ($useContainer && is_null($action)) {
+                return new LazyProp($this->container->get($name));
+            }
+        }
+
+        return new LazyProp($callback);
     }
 
     /**
