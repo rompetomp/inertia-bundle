@@ -387,4 +387,5 @@ This will be available in `http://127.0.0.1:13714` where this is the path we nee
 
 ## Projects using this bundle
 - [Ping CRM on Symfony](https://github.com/aleksblendwerk/pingcrm-symfony) - The official Inertia.js demo app, ported to Symfony
-- [Symfony + Inertia + Vuejs Template](https://github.com/cydrickn/symfony-intertia) - Github template repository that uses Symfony, Inertia and Vuejs
+- [Symfony + Inertia + Vuejs Template](https://github.com/cydrickn/symfony-intertia) - Github template repository that uses Symfony, Webpack/Encore, Inertia and Vuejs
+- [Symfony + Vite + Inertia + Vuejs Template](https://github.com/cydrickn/sviv) - Github template repository uses Symfony, Vite, Inertia and Vuejs

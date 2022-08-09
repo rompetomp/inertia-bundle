@@ -26,7 +26,13 @@ class HttpGateway implements GatewayInterface
             $response = $this->httpClient->request(
                 'POST',
                 $this->interia->getSsrUrl(),
-                ['body' => json_encode($page)]
+                [
+                    'headers' => [
+                        'Content-Type: application/json',
+                        'Accept: application/json',
+                    ],
+                    'body' => json_encode($page),
+                ]
             );
         } catch (Exception $e) {
             return null;
