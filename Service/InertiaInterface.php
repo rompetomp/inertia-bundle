@@ -2,6 +2,7 @@
 
 namespace Rompetomp\InertiaBundle\Service;
 
+use Rompetomp\InertiaBundle\LazyProp;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -79,6 +80,11 @@ interface InertiaInterface
      * Get the ssr url where it will fetch its content.
      */
     public function getSsrUrl(): string;
+
+    /**
+     * @param callable|string|array $callback
+     */
+    public function lazy($callback): LazyProp;
 
     /**
      * @param string $component component name

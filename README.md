@@ -272,8 +272,43 @@ Like in Laravel, you can also pass a version to the Inertia services by calling
 $inertia->version($version);
 ```
 
+## Lazy Prop
+
+It's more efficient to use lazy data evaluation server-side you are using partial reloads.
+
+To use lazy data you need to use `Rompetomp\InertiaBundle\Service\Inertia::lazy`
+
+Sample usage:
+```php
+<?php
+namespace App\Controller;
+
+use Rompetomp\InertiaBundle\Service\InertiaInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class DashboardController extends AbstractController
+{
+    public function index(InertiaInterface $inertia)
+    {
+        return $inertia->render('Dashboard', [
+            // using array
+            'usingArray' => $inertia->lazy(['SomeClass', 'someMethod']),
+            // using string
+            'usingString' => $inertia->lazy('SomeClass::someMethod'),
+            // using callable
+            'usingCallable' => $inertia->lazy(function () { retrun [...] }),
+        ]);
+    }
+}
+```
+
+The `lazy` method can accept callable, array and string
+When using string or array, the service will try to check if it is existing service in container if not
+it will just proceed to call the function
+
 ## Server-side rendering
 
+For frontend configuration just follow the document https://inertiajs.com/server-side-rendering#setting-up-ssr
 
 ### Setting up Encore / webpack
 
@@ -352,4 +387,5 @@ This will be available in `http://127.0.0.1:13714` where this is the path we nee
 
 ## Projects using this bundle
 - [Ping CRM on Symfony](https://github.com/aleksblendwerk/pingcrm-symfony) - The official Inertia.js demo app, ported to Symfony
-- [Symfony + Inertia + Vuejs Template](https://github.com/cydrickn/symfony-intertia) - Github template repository that uses Symfony, Inertia and Vuejs
+- [Symfony + Inertia + Vuejs Template](https://github.com/cydrickn/symfony-intertia) - Github template repository that uses Symfony, Webpack/Encore, Inertia and Vuejs
+- [Symfony + Vite + Inertia + Vuejs Template](https://github.com/cydrickn/sviv) - Github template repository uses Symfony, Vite, Inertia and Vuejs
