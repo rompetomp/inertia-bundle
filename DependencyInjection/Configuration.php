@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('enabled')->defaultFalse()->end()
-                        ->scalarNode('url')->defaultNull()->end()
+                        ->scalarNode('url')->defaultValue('')->end()
                     ->end()
                 ->end()
             ->end();
