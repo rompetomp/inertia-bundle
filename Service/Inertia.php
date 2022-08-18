@@ -156,7 +156,7 @@ class Inertia implements InertiaInterface
             });
 
         array_walk_recursive($props, function (&$prop) {
-            if (is_callable($prop) || $prop instanceof LazyProp) {
+            if (!is_string($prop) && $prop instanceof LazyProp) {
                 $prop = call_user_func($prop);
             } elseif ($prop instanceof \Closure) {
                 $prop = $prop();
