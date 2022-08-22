@@ -52,7 +52,7 @@ If you'd like a different root view, you can change it by creating a `config/pac
 and including this config:
 ```yaml
 rompetomp_inertia:
-  root_view: 'name.twig.html'
+  root_view: 'name.html.twig'
 ```
 
 ## Set up the frontend adapter
