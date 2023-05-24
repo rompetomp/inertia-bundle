@@ -296,7 +296,7 @@ class DashboardController extends AbstractController
             // using string
             'usingString' => $inertia->lazy('SomeClass::someMethod'),
             // using callable
-            'usingCallable' => $inertia->lazy(function () { retrun [...] }),
+            'usingCallable' => $inertia->lazy(function () { return [...]; }),
         ]);
     }
 }
