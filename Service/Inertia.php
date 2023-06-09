@@ -140,13 +140,13 @@ class Inertia implements InertiaInterface
         return $this->ssrUrl;
     }
 
-    public function render($component, $props = [], $viewData = [], $context = []): Response
+    public function render($component, $props = [], $viewData = [], $context = [], $url = null): Response
     {
         $context = array_merge($this->sharedContext, $context);
         $viewData = array_merge($this->sharedViewData, $viewData);
         $props = array_merge($this->sharedProps, $props);
         $request = $this->requestStack->getCurrentRequest();
-        $url = $request->getRequestUri();
+        $url = $url ?? $request->getRequestUri();
 
         $only = array_filter(explode(',', $request->headers->get('X-Inertia-Partial-Data') ?? ''));
         $props = ($only && $request->headers->get('X-Inertia-Partial-Component') === $component)

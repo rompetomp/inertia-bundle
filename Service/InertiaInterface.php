@@ -87,10 +87,11 @@ interface InertiaInterface
     public function lazy($callback): LazyProp;
 
     /**
-     * @param string $component component name
-     * @param array  $props     component properties
-     * @param array  $viewData  templating view data
-     * @param array  $context   serialization context
+     * @param string      $component component name
+     * @param array       $props     component properties
+     * @param array       $viewData  templating view data
+     * @param array       $context   serialization context
+     * @param string|null $url       custom url
      */
-    public function render($component, $props = [], $viewData = [], $context = []): Response;
+    public function render($component, $props = [], $viewData = [], $context = [], $url = null): Response;
 }
