@@ -327,7 +327,7 @@ touch webpack.ssr.mix.js
 Here is an example file for `webpack.ssr.config.js`
 ```js
 const Encore = require('@symfony/webpack-encore')
-const webpackNodeExternals = require('webpack-node-externals')
+const nodeExternals = require('webpack-node-externals')
 const path = require('path')
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -343,10 +343,14 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .enableSassLoader()
+    .addExternals(
+        nodeExternals({
+              allowlist: ['@inertiajs/vue3'],
+        }),
+    );
 
 const config = Encore.getWebpackConfig();
-config.target = 'node';
-config.externals = [webpackNodeExternals()];
+config.externalsPresets = { node: true };
 
 module.exports = config
 ```
