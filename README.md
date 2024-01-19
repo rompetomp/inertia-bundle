@@ -5,6 +5,12 @@
 This is a Inertia.js server-side adapter based on [inertia-laravel](https://github.com/inertiajs/inertia-laravel), but
 for Symfony 5 and 6.
 
+> [!WARNING]
+> ### Looking for a new owner
+> As I don't work with Symfony or PHP anymore, I'm looking for someone who wants to take over the development of this project.
+> As of now the project is unmaintained.
+
+
 ## Installation
 First, make sure you have the twig, encore and serializer recipe:
 ```console
